@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: API SQUADRA
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: C##JAVA
+    password: java
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+    database-platform: org.hibernate.dialect.OracleDialect
