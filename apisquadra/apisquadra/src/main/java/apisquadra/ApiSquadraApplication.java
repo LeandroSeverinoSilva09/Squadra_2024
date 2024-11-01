@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApiSquadraApplication {
 
-	@GetMapping("/helloword")
-	public String helloword(){
-		return "hello word";
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(ApiSquadraApplication.class, args);
 
