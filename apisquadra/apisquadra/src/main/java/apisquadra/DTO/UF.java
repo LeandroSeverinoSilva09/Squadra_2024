@@ -1,4 +1,4 @@
-package apisquadra.model;
+package apisquadra.DTO;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,8 +19,10 @@ public class UF {
     @Column(name = "SIGLA")
     private String sigla;
 
-
+    @Column(name = "NOME")
     private String nome;
+
+    @Column(name = "STATUS")
     private int status;
 
 }

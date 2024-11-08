@@ -9,5 +9,11 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
 
   jpa:
+    show-sql: true
+    properties:
+        hibernate:
+          format_sql: true
+          use_sql_comments: true
+          generate_statistics: true
     hibernate:
     database-platform: org.hibernate.dialect.OracleDialect

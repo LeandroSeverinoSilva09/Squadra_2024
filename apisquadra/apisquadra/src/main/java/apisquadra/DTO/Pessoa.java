@@ -1,90 +1,42 @@
-package apisquadra.model;
+package apisquadra.DTO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import java.util.List;
 
+@Getter
+@Setter
 @Entity
+@Table(name = "TB_PESSOA")
 public class Pessoa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_seq")
+    @SequenceGenerator(name = "pessoa_seq", sequenceName = "SEQUENCE_PESSOA", allocationSize = 1)
+    @Column(name = "CODIGO_PESSOA")
     private long codigoPessoa;
 
+    @Column(name = "NOME")
     private String nome;
 
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public ArrayList<String> getEndereços() {
-        return endereços;
-    }
-
-    public void setEndereços(ArrayList<String> endereços) {
-        this.endereços = endereços;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public long getCodigoPessoa() {
-        return codigoPessoa;
-    }
-
-    public void setCodigoPessoa(long codigoPessoa) {
-        this.codigoPessoa = codigoPessoa;
-    }
-
+    @Column(name = "SOBRENOME")
     private String sobrenome;
-    private int idade;
-    private String login;
-    private String senha;
-    private int status;
-    private ArrayList<String> endereços;
 
+    @Column(name = "IDADE")
+    private int idade;
+
+    @Column(name = "LOGIN")
+    private String login;
+
+    @Column(name = "SENHA")
+    private String senha;
+
+    @Column(name = "STATUS")
+    private int status;
+
+    //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoa")
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Endereco> enderecos;
 
 }
