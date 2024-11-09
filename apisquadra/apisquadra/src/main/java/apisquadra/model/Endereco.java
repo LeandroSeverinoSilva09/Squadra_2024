@@ -1,5 +1,6 @@
 package apisquadra.DTO;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class Endereco {
 
     @ManyToOne
     @JoinColumn(name = "CODIGO_PESSOA")
+    @JsonBackReference
     private Pessoa pessoa;
 
     @Column(name = "CODIGO_BAIRRO")

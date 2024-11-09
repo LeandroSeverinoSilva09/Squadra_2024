@@ -1,5 +1,6 @@
 package apisquadra.DTO;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,7 @@ public class Pessoa {
 
     //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoa")
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Endereco> enderecos;
 
 }
