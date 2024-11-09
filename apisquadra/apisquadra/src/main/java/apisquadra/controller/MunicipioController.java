@@ -1,6 +1,6 @@
 package apisquadra.controller;
 
-import apisquadra.DTO.Municipio;
+import apisquadra.model.Municipio;
 import apisquadra.repository.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

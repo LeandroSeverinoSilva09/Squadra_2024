@@ -1,11 +1,15 @@
-package apisquadra.DTO;
+package apisquadra.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "TB_BAIRRO")
 public class Bairro {

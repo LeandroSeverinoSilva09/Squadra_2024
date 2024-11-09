@@ -1,6 +1,6 @@
 package apisquadra.controller;
 
-import apisquadra.DTO.Bairro;
+import apisquadra.model.Bairro;
 import apisquadra.repository.BairroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

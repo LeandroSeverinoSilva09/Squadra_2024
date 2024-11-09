@@ -1,11 +1,8 @@
 package apisquadra.controller;
 
-import apisquadra.DTO.Endereco;
-import apisquadra.DTO.Pessoa;
-import apisquadra.DTO.UF;
-import apisquadra.repository.EnderecoRepository;
+import apisquadra.model.Endereco;
+import apisquadra.model.Pessoa;
 import apisquadra.repository.PessoaRepository;
-import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

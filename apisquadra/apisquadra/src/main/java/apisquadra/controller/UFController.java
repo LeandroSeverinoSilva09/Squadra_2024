@@ -1,6 +1,6 @@
 package apisquadra.controller;
 
-import apisquadra.DTO.UF;
+import apisquadra.model.UF;
 import apisquadra.repository.UFRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
