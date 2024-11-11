@@ -1,5 +1,6 @@
 package apisquadra.DTO;
 
+import apisquadra.model.Bairro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,5 @@ public class BairroDTO {
     private String nome;
 
     private int status;
+
 }

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -41,8 +43,7 @@ public class Pessoa {
     private int status;
 
     //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoa")
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Endereco> enderecos;
+    //@OneToMany(mappedBy = "codigoPessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private List<Endereco> enderecos = new ArrayList<>();
 
 }

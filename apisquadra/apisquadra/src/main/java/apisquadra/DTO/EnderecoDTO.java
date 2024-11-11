@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnderecoDTO {
+    private long codigoPessoa;
 
     private long codigoEndereco;
 

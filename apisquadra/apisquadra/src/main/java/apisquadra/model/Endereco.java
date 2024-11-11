@@ -1,6 +1,5 @@
 package apisquadra.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +20,11 @@ public class Endereco {
     @Column(name = "CODIGO_ENDERECO")
     private long codigoEndereco;
 
-    @ManyToOne
-    @JoinColumn(name = "CODIGO_PESSOA")
-    @JsonBackReference
-    private Pessoa pessoa;
+    //@ManyToOne
+    //@JoinColumn(name = "CODIGO_PESSOA")
+    //private Pessoa pessoa;
+    @Column(name = "CODIGO_PESSOA")
+    private long codigoPessoa;
 
     @Column(name = "CODIGO_BAIRRO")
     private long codigoBairro;

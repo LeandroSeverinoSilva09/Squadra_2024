@@ -1,23 +1,28 @@
 package apisquadra.controller;
 
+import apisquadra.DTO.BairroDTO;
 import apisquadra.model.Bairro;
-import apisquadra.repository.BairroRepository;
+import apisquadra.service.BairroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bairro")
 public class BairroController {
 
     @Autowired
-    private BairroRepository sqlBairro;
+    private BairroService bairroService;
 
     @PostMapping()
-    public ResponseEntity salvar (@RequestBody Bairro bairro){
-        sqlBairro.save(bairro);
-        return new ResponseEntity(bairro, HttpStatus.OK);
+    public ResponseEntity salvar (@RequestBody BairroDTO bairroDTO){
+        List<BairroDTO> bairros = bairroService.salvarBairro(bairroDTO);
+
+        return new ResponseEntity(bairros, HttpStatus.OK);
     }
+
+
 
 }

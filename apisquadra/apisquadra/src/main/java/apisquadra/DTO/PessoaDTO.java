@@ -1,11 +1,13 @@
 package apisquadra.DTO;
 
 import apisquadra.model.Endereco;
+import apisquadra.model.Pessoa;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,5 +30,6 @@ public class PessoaDTO {
 
     private int status;
 
-    private List<Endereco> enderecos;
+    private List<Endereco> enderecos = new ArrayList<>();
+
 }

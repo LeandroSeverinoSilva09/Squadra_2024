@@ -18,7 +18,10 @@
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dd34428b-ec9d-48b1-a2bf-ccffad34634d">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
-      <console name="Connection 1" type="STANDARD" schema="C##JAVA" session="Main"><![CDATA[select * from TB_ENDERECO]]></console>
+      <console name="Connection 1" type="STANDARD" schema="C##JAVA" session="Main"><![CDATA[select * from TB_ENDERECO;
+select * from TB_PESSOA
+--TRUNCATE TABLE TB_PESSOA;
+--truncate table TB_ENDERECO;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
