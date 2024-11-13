@@ -1,6 +1,6 @@
 package apisquadra.service;
 
-import apisquadra.DTO.PessoaDTO;
+import apisquadra.dto.PessoaDTO;
 import apisquadra.model.Endereco;
 import apisquadra.model.Pessoa;
 import apisquadra.repository.EnderecoRepository;

@@ -1,10 +1,9 @@
 package apisquadra.service;
 
-import apisquadra.DTO.MunicipioDTO;
-import apisquadra.DTO.MunicipioDTO;
-import apisquadra.model.Municipio;
+import apisquadra.dto.MunicipioDTO;
 import apisquadra.model.Municipio;
 import apisquadra.repository.MunicipioRepository;
+import apisquadra.validator.MunicipioValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -15,8 +14,11 @@ import java.util.List;
 
 @Service
 public class MunicipioService {
+
     @Autowired
     private MunicipioRepository sqlMunicipio;
+    @Autowired
+    private MunicipioValidator validatorMunicipio;
 
     public List<MunicipioDTO> salvarMunicipio (MunicipioDTO municipiodto){
         Municipio municipio = new Municipio(
@@ -26,6 +28,7 @@ public class MunicipioService {
                 municipiodto.getStatus()
         );
 
+        validatorMunicipio.existeMunicioCadastrado(municipio);
         sqlMunicipio.save(municipio);
         
         List<MunicipioDTO> listaMunicipioDTO = new ArrayList<>();

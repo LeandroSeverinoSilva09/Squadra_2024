@@ -1,10 +1,9 @@
 package apisquadra.service;
 
-import apisquadra.DTO.BairroDTO;
-import apisquadra.DTO.BairroDTO;
-import apisquadra.model.Bairro;
+import apisquadra.dto.BairroDTO;
 import apisquadra.model.Bairro;
 import apisquadra.repository.BairroRepository;
+import apisquadra.validator.BairroValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,13 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BairroService {
 
     @Autowired
     private BairroRepository sqlBairro;
+    @Autowired
+    private BairroValidator validatorBairro;
 
     public List<BairroDTO> salvarBairro (BairroDTO bairroDTO){
         Bairro bairro = new Bairro(
@@ -28,6 +28,7 @@ public class BairroService {
                 bairroDTO.getStatus()
         );
 
+        validatorBairro.existeBairroCadastrado(bairro);
         sqlBairro.save(bairro);
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
 

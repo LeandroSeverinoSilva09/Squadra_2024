@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
+
+    boolean existsByCodigoUF(long codigoUF);
+    boolean existsByNome(String nome);
 }

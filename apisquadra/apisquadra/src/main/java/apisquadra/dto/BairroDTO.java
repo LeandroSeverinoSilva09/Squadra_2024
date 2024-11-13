@@ -1,6 +1,5 @@
-package apisquadra.DTO;
+package apisquadra.dto;
 
-import apisquadra.model.Bairro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

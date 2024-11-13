@@ -1,9 +1,6 @@
 package apisquadra.controller;
 
-import apisquadra.DTO.PessoaDTO;
-import apisquadra.model.Endereco;
-import apisquadra.model.Pessoa;
-import apisquadra.repository.PessoaRepository;
+import apisquadra.dto.PessoaDTO;
 import apisquadra.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

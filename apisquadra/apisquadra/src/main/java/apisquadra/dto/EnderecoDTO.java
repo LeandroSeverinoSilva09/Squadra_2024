@@ -1,4 +1,4 @@
-package apisquadra.DTO;
+package apisquadra.dto;
 
 import apisquadra.model.Pessoa;
 import lombok.AllArgsConstructor;

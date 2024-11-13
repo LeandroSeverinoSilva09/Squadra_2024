@@ -21,7 +21,7 @@
       <console name="Connection 1" type="STANDARD" schema="C##JAVA" session="Main"><![CDATA[select * from TB_ENDERECO;
 select * from TB_PESSOA
 --TRUNCATE TABLE TB_PESSOA;
---truncate table TB_ENDERECO;]]></console>
+--truncate table TB_uf;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

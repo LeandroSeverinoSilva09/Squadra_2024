@@ -1,4 +1,4 @@
-package apisquadra.DTO;
+package apisquadra.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

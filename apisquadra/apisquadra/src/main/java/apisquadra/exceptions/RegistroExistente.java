@@ -1,4 +1,8 @@
 package apisquadra.exceptions;
 
-public class RegistroDuplicado {
+public class RegistroExistente extends RuntimeException{
+
+    public RegistroExistente(String message) {
+        super(message);
+    }
 }
