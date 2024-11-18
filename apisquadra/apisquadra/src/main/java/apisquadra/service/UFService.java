@@ -67,6 +67,7 @@ public class UFService {
     public UFDTO buscarUFSigla (String sigla){
         UFDTO ufDTOResposta = new UFDTO();
         UF ufresposta = sqlUF.findBySigla(sigla);
+        System.out.println(ufresposta);
         BeanUtils.copyProperties(ufresposta, ufDTOResposta);
         return ufDTOResposta;
     }

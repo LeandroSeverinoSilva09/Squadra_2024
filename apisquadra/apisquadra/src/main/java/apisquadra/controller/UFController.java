@@ -29,6 +29,8 @@ public class UFController {
             @RequestParam(required = false) String sigla,
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status){
+
+        List<>
         if (status != null){
             List<UFDTO> ufDTOLista = ufService.buscarListaUF(status);
             return new ResponseEntity(ufDTOLista, HttpStatus.OK);
