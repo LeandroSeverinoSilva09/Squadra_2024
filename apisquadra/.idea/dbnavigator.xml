@@ -17,18 +17,27 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dd34428b-ec9d-48b1-a2bf-ccffad34634d">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
-      <console name="Connection 1" type="STANDARD" schema="C##JAVA" session="Main"><![CDATA[select * from TB_ENDERECO;
-select * from TB_PESSOA
+      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[SELECT m.codigo_municipio, m.codigo_uf, u.nome FROM tb_municipio m LEFT JOIN tb_uf u ON m.codigo_uf = u.codigo_uf WHERE m.codigo_uf IS NULL;]]></console>
+      <console name="Connection 1" type="STANDARD" schema="C##JAVA" session="Main"><![CDATA[select * from TB_UF;
+select * from TB_MUNICIPIO;
+select * from TB_PESSOA;
+select * from TB_ENDERECO;
+select * from TB_BAIRRO
+
 --TRUNCATE TABLE TB_PESSOA;
---truncate table TB_uf;]]></console>
+--truncate table TB_uf;
+--truncate TABLE TB_ENDERECO;
+--truncate table TB_BAIRRO;
+--truncate table TB_MUNICIPIO;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="dd34428b-ec9d-48b1-a2bf-ccffad34634d" object-ref="consoles/Connection 1" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dd34428b-ec9d-48b1-a2bf-ccffad34634d" />
@@ -39,6 +48,9 @@ select * from TB_PESSOA
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
+  </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>

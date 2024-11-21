@@ -44,6 +44,27 @@ public class UFService {
 
     }
 
+
+    public List<UFDTO> buscarUFComStatus(Long codigoUF, String sigla, String nome, Integer status){
+        List<UFDTO> listaUFDTO = new ArrayList<>();
+
+        for (UF ufResposta : sqlUF.findByUFComStatus(codigoUF, sigla, nome, status)){
+            UFDTO ufDTOResposta = new UFDTO();
+            BeanUtils.copyProperties(ufResposta, ufDTOResposta);
+            listaUFDTO.add(ufDTOResposta);
+        }
+
+        return listaUFDTO;
+    }
+
+    public UFDTO buscarUFSemStatus(Long codigoUF, String sigla, String nome){
+        UFDTO ufDTOResposta = new UFDTO();
+        UF ufresposta = sqlUF.findByUFSemStatus(codigoUF, sigla, nome);
+        BeanUtils.copyProperties(ufresposta, ufDTOResposta);
+        return ufDTOResposta;
+
+    }
+
     public List<UFDTO> buscarListaUF (int status){
 
         List<UFDTO> listaUFDTO = new ArrayList<>();
@@ -56,26 +77,5 @@ public class UFService {
         return listaUFDTO;
     }
 
-    public UFDTO buscarUFNome (String nome){
-        UFDTO ufDTOResposta = new UFDTO();
-        UF ufresposta = sqlUF.findByNome(nome);
-        BeanUtils.copyProperties(ufresposta, ufDTOResposta);
-        return ufDTOResposta;
 
-    }
-
-    public UFDTO buscarUFSigla (String sigla){
-        UFDTO ufDTOResposta = new UFDTO();
-        UF ufresposta = sqlUF.findBySigla(sigla);
-        System.out.println(ufresposta);
-        BeanUtils.copyProperties(ufresposta, ufDTOResposta);
-        return ufDTOResposta;
-    }
-
-    public UFDTO buscarUFCodigoUF (long codigoUF){
-        UFDTO ufDTOResposta = new UFDTO();
-        UF ufresposta = sqlUF.findByCodigoUF(codigoUF);
-        BeanUtils.copyProperties(ufresposta, ufDTOResposta);
-        return ufDTOResposta;
-    }
 }

@@ -17,3 +17,10 @@ spring:
           generate_statistics: true
     hibernate:
     database-platform: org.hibernate.dialect.OracleDialect
+
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE

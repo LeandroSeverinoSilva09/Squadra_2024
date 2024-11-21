@@ -1,13 +1,17 @@
 package apisquadra.controller;
 
 import apisquadra.dto.UFDTO;
+import apisquadra.model.UF;
 import apisquadra.service.UFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/uf")
@@ -30,24 +34,19 @@ public class UFController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status){
 
-        List<>
-        if (status != null){
-            List<UFDTO> ufDTOLista = ufService.buscarListaUF(status);
-            return new ResponseEntity(ufDTOLista, HttpStatus.OK);
+        List<UFDTO> listaUFDTO = new ArrayList<>();
+        if (status != null) {
+            listaUFDTO = ufService.buscarUFComStatus(codigoUF, sigla, nome, status);
 
-        } else if (sigla!=null) {
-            UFDTO ufDTO = ufService.buscarUFSigla(sigla);
-            return new ResponseEntity(ufDTO, HttpStatus.OK);
+            return new ResponseEntity(listaUFDTO, HttpStatus.OK);
+        } else if (sigla!=null || nome!=null){
+            UFDTO ufDTOResposta = ufService.buscarUFSemStatus(codigoUF, sigla, nome);
 
-        } else if ( nome != null ) {
-            UFDTO ufDTO = ufService.buscarUFNome(nome);
-            return new ResponseEntity(ufDTO, HttpStatus.OK);
-
-        } else if (codigoUF != null) {
-            UFDTO ufDTO = ufService.buscarUFCodigoUF(codigoUF);
-            return new ResponseEntity(ufDTO, HttpStatus.OK);
+            return new ResponseEntity(ufDTOResposta, HttpStatus.OK);
         }
-        return new ResponseEntity("", HttpStatus.OK);
+
+        return new ResponseEntity(listaUFDTO, HttpStatus.OK);
+
 
     }
 }

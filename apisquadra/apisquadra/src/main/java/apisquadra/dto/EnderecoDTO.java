@@ -1,6 +1,6 @@
 package apisquadra.dto;
 
-import apisquadra.model.Pessoa;
+import apisquadra.model.Bairro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnderecoDTO {
+
     private long codigoPessoa;
 
     private long codigoEndereco;
-
-    private Pessoa pessoa;
 
     private long codigoBairro;
 
@@ -26,4 +25,5 @@ public class EnderecoDTO {
     private String complemento;
 
     private String cep;
+
 }

@@ -13,6 +13,7 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+
     private ResponseEntity<Map<String, Object>> respostaJson(String mensagem, HttpStatus status) {
         Map<String, Object> resposta = new HashMap<>();
         resposta.put("mensagem", mensagem);
@@ -22,7 +23,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RegistroExistente.class)
     public ResponseEntity<Map<String, Object>> handleApiExceptions(RuntimeException ex) {
-        return respostaJson("Registro inexistente" /*+ ex.getMessage()*/, HttpStatus.NOT_FOUND);
+        return respostaJson("Registro já existente" /*+ ex.getMessage()*/, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -33,7 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, Object>> DataIntegrityViolationException (DataIntegrityViolationException ex){
-        return respostaJson("Chave Primárianão existe", HttpStatus.NOT_FOUND);
+        return respostaJson("Chave Primária não existe", HttpStatus.NOT_FOUND);
 
     }
 

@@ -1,6 +1,7 @@
 package apisquadra.dto;
 
 
+import apisquadra.model.UF;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

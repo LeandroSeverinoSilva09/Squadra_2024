@@ -13,8 +13,8 @@ public class MunicipioValidator {
     private MunicipioRepository sqlMunicipio;
 
     public void existeMunicioCadastrado(Municipio municipio){
-        if (sqlMunicipio.existsByCodigoUF(municipio.getCodigoUF()) || sqlMunicipio.existsByNome(municipio.getNome())){
-            throw new RegistroExistente("Não foi possível cadastrar município no banco de dados.");
+        if (sqlMunicipio.existsByNome(municipio.getNome())){
+            throw new RegistroExistente("Municpio já cadastrado.");
         }
     }
 }

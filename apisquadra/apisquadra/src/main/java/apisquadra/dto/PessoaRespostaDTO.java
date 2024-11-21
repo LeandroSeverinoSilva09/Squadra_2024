@@ -1,19 +1,30 @@
 package apisquadra.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.List;
 
 @Setter
 @Getter
-public class PessoaExtendDTO extends PessoaDTO{
+@NoArgsConstructor
+@AllArgsConstructor
+public class PessoaRespostaDTO {
 
-    public PessoaExtendDTO(long codigoPessoa, String nome, String sobrenome, int idade, String login, String senha, int status, List<EnderecoDTO> enderecos, List<EnderecoExtendsDTO> enderecosExtendsDTO) {
-        super(codigoPessoa, nome, sobrenome, idade, login, senha, status, enderecos);
-        this.enderecosExtendsDTO = enderecosExtendsDTO;
-    }
+    private long codigoPessoa;
 
-    private List<EnderecoExtendsDTO> enderecosExtendsDTO;
+    private String nome;
+
+    private String sobrenome;
+
+    private int idade;
+
+    private String login;
+
+    private String senha;private int status;
+
+    private List<EnderecoExtendsDTO> enderecos;
 
 
 

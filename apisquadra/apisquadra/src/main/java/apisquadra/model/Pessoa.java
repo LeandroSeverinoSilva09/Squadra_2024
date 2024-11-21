@@ -1,5 +1,6 @@
 package apisquadra.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,8 +43,8 @@ public class Pessoa {
     @Column(name = "STATUS")
     private int status;
 
-    //@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pessoa")
-    //@OneToMany(mappedBy = "codigoPessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Endereco> enderecos = new ArrayList<>();
     //private List<Endereco> enderecos = new ArrayList<>();
 
 }

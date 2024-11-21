@@ -29,6 +29,7 @@ public class PessoaDTO {
 
     private int status;
 
-    private List<Endereco> enderecos = new ArrayList<>();
+    private List<EnderecoDTO> enderecos = new ArrayList<>();
+
 
 }

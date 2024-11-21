@@ -1,5 +1,6 @@
 package apisquadra.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,14 +21,20 @@ public class Endereco {
     @Column(name = "CODIGO_ENDERECO")
     private long codigoEndereco;
 
-    //@ManyToOne
-    //@JoinColumn(name = "CODIGO_PESSOA")
-    //private Pessoa pessoa;
-    @Column(name = "CODIGO_PESSOA")
-    private long codigoPessoa;
 
-    @Column(name = "CODIGO_BAIRRO")
-    private long codigoBairro;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CODIGO_PESSOA", nullable = false)
+    @JsonIgnore
+    //private Pessoa pessoa;
+    //@Column(name = "CODIGO_PESSOA")
+    //private long codigoPessoa;
+    private Pessoa pessoa;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CODIGO_BAIRRO", nullable = false)
+    //@Column(name = "CODIGO_BAIRRO")
+    //private long codigoBairro;
+    private Bairro bairro;
 
     @Column(name = "NOME_RUA")
     private String nomeRua;

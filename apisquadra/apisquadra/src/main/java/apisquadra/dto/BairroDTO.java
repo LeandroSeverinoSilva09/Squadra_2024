@@ -19,4 +19,7 @@ public class BairroDTO {
 
     private int status;
 
+
+
+
 }

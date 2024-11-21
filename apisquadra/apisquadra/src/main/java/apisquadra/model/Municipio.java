@@ -1,5 +1,6 @@
 package apisquadra.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +21,12 @@ public class Municipio {
     @Column(name = "CODIGO_MUNICIPIO")
     private long codigoMunicipio;
 
-    @Column(name = "CODIGO_UF")
-    private long codigoUF;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CODIGO_UF", nullable = false)
+    //@JsonIgnore
+    //@Column(name = "CODIGO_UF")
+    //private long codigoUF;
+    private UF uf;
 
     @Column(name = "NOME")
     private String nome;
