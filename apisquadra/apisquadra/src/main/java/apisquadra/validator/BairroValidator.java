@@ -1,6 +1,5 @@
 package apisquadra.validator;
 
-import apisquadra.exceptions.RegistroExistente;
 import apisquadra.model.Bairro;
 import apisquadra.repository.BairroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,13 @@ public class BairroValidator {
     @Autowired
     private BairroRepository sqlBairro;
 
-    public void existeBairroCadastrado (Bairro bairro){
-        if (sqlBairro.existsByNome(bairro.getNome())){
-            throw new RegistroExistente("Bairro já cadastrado.");
-        }
+
+
+    public boolean existeBairroCadastrado (Bairro bairro){
+        return sqlBairro.existsByNome(bairro.getNome());
+    }
+
+    public boolean existeBairroCodigoBairro (long codigoBairro){
+        return sqlBairro.existsById(codigoBairro);
     }
 }

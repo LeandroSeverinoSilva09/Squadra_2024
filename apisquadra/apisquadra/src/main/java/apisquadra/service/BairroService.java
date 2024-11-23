@@ -1,7 +1,10 @@
 package apisquadra.service;
 
 import apisquadra.dto.BairroDTO;
+import apisquadra.dto.UFDTO;
+import apisquadra.exceptions.ExceptionPersonalizada;
 import apisquadra.model.Bairro;
+import apisquadra.model.UF;
 import apisquadra.repository.BairroRepository;
 import apisquadra.repository.MunicipioRepository;
 import apisquadra.validator.BairroValidator;
@@ -31,7 +34,9 @@ public class BairroService {
                 bairroDTO.getStatus()
         );
 
-        validatorBairro.existeBairroCadastrado(bairro);
+        if (validatorBairro.existeBairroCadastrado(bairro)){
+            throw new ExceptionPersonalizada("Bairro já existente");
+        };
         sqlBairro.save(bairro);
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
 
@@ -64,6 +69,39 @@ public class BairroService {
         bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
         return bairroDTOResposta;
     }
+
+    public List<BairroDTO> alterarBairro (BairroDTO bairrodto){
+        if (bairrodto.getCodigoBairro() == null){
+            throw new ExceptionPersonalizada("O codigoBairro precisa ter um valor válido");
+        }
+        Bairro bairro = new Bairro();
+        BeanUtils.copyProperties(bairrodto, bairro);
+
+        List<BairroDTO> listaBairroDTO = new ArrayList<>();
+
+        if (validatorBairro.existeBairroCodigoBairro(bairro.getCodigoBairro())) {
+            if (validatorBairro.existeBairroCadastrado(bairro)) {
+                throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
+            }
+            sqlBairro.save(bairro);
+
+
+            for (Bairro bairroSalvoConsulta : sqlBairro.findAll(Sort.by(Sort.Order.desc("codigoBairro")))) {
+                BairroDTO bairroDTOResposta = new BairroDTO();
+                bairroDTOResposta.setCodigoMunicipio(bairroSalvoConsulta.getMunicipio().getCodigoMunicipio());
+                BeanUtils.copyProperties(bairroSalvoConsulta, bairroDTOResposta);
+                listaBairroDTO.add(bairroDTOResposta);
+            }
+
+            return listaBairroDTO;
+
+        }else{
+            throw new ExceptionPersonalizada("Não existe UF com esse código " + bairro.getCodigoBairro());
+        }
+    }
+
+
+
 
 
 }

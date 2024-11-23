@@ -1,5 +1,6 @@
 package apisquadra.validator;
 
+import apisquadra.exceptions.ExceptionPersonalizada;
 import apisquadra.exceptions.RegistroExistente;
 import apisquadra.model.UF;
 import apisquadra.repository.UFRepository;
@@ -13,9 +14,11 @@ public class UFValidator {
     private UFRepository sqlUF;
 
 
-    public void existeUFCadastrada (UF uf){
-        if (sqlUF.existsByNome(uf.getSigla()) || sqlUF.existsBySigla(uf.getSigla())){
-            throw new RegistroExistente("UF já cadastrada"); //Não foi possível incluir UF no banco de dados.
-        }
+    public boolean existeUFCadastradaNomeSigla (UF uf){
+        return sqlUF.existsByNome(uf.getSigla()) || sqlUF.existsBySigla(uf.getSigla());
+    }
+
+    public boolean existeUFCodigoUF (long codigoUF){
+        return sqlUF.existsById(codigoUF);
     }
 }

@@ -12,9 +12,11 @@ public class PessoaValidator {
     @Autowired
     private PessoaRepository sqlpessoa;
 
-    public void existePessoaCadastrada (Pessoa pessoa){
-        if (sqlpessoa.existsByLogin(pessoa.getLogin())){
-            throw new RegistroExistente("Não foi possivél cadastrar a pessoa no banco de dados");
-        }
+    public boolean existePessoaLogin (Pessoa pessoa){
+        return sqlpessoa.existsByLogin(pessoa.getLogin());
+    }
+
+    public boolean existePessoaCodigoPessoa(long codigoPessoa){
+        return sqlpessoa.existsById(codigoPessoa);
     }
 }

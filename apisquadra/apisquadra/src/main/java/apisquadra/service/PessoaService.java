@@ -1,15 +1,18 @@
 package apisquadra.service;
 
 import apisquadra.dto.*;
+import apisquadra.exceptions.ExceptionPersonalizada;
 import apisquadra.model.*;
 import apisquadra.repository.BairroRepository;
 import apisquadra.repository.EnderecoRepository;
 import apisquadra.repository.PessoaRepository;
+import apisquadra.validator.EnderecoValidator;
 import apisquadra.validator.PessoaValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +28,17 @@ public class PessoaService {
     private PessoaValidator validatorPessoa;
     @Autowired
     private BairroRepository sqlBairro;
+    @Autowired
+    private EnderecoValidator validatorEndereco;
 
     public List<PessoaDTO> salvarPessoa (PessoaDTO pessoaDTO){
 
         Pessoa pessoa = new Pessoa();
         BeanUtils.copyProperties(pessoaDTO, pessoa);
 
-        validatorPessoa.existePessoaCadastrada(pessoa);
+        if (validatorPessoa.existePessoaLogin(pessoa)){
+            throw new ExceptionPersonalizada("Pessoa já existente");
+        }
         Pessoa pessoaSalva = sqlPessoa.save(pessoa);
         for (EnderecoDTO enderecoDTO : pessoaDTO.getEnderecos()){
             Endereco endereco = new Endereco();
@@ -115,12 +122,65 @@ public class PessoaService {
 
     }
 
-    public  PessoaDTO buscarPessoaLogin(String login){
+    public PessoaDTO buscarPessoaLogin(String login){
         PessoaDTO pessoaDTOResposta = new PessoaDTO();
         Pessoa pessoa = sqlPessoa.findByLogin(login);
         BeanUtils.copyProperties(pessoa, pessoaDTOResposta);
         return  pessoaDTOResposta;
     }
 
+    public List<PessoaDTO> buscarPessoas(){
+        List<PessoaDTO> pessoasDTOSalvas = new ArrayList<>();
 
+        for (Pessoa pessoaResposta : sqlPessoa.findAll()){
+            PessoaDTO pessoaDTOResposta = new PessoaDTO();
+            BeanUtils.copyProperties(pessoaResposta, pessoaDTOResposta);
+            pessoasDTOSalvas.add(pessoaDTOResposta);
+        }
+        return pessoasDTOSalvas;
+    }
+
+
+
+    public List<PessoaDTO> alterar (PessoaDTO pessoaDTO) {
+
+        if (pessoaDTO.getCodigoPessoa() == null) {
+            throw new ExceptionPersonalizada("O codigoPessoa precisa ter um valor válido");
+        }
+        Pessoa pessoa = new Pessoa();
+        BeanUtils.copyProperties(pessoaDTO, pessoa);
+
+        if (validatorPessoa.existePessoaCodigoPessoa(pessoa.getCodigoPessoa())) {
+            //if (validatorPessoa.existePessoaLogin(pessoa)) {
+                //throw new ExceptionPersonalizada("Já existente outra pessoa com esse login");
+            //}
+            Pessoa pessoaSalva = sqlPessoa.save(pessoa);
+
+            List<Endereco> enderecosRequest = new ArrayList<>();
+            for (EnderecoDTO enderecoDTO : pessoaDTO.getEnderecos()) {
+                Endereco endereco = new Endereco();
+                BeanUtils.copyProperties(enderecoDTO, endereco);
+                Bairro bairro = sqlBairro.findByCodigoBairro(enderecoDTO.getCodigoBairro());
+                endereco.setBairro(bairro);
+                enderecosRequest.add(endereco);
+            }
+
+            for (Endereco enderecoSalvo : sqlEndereco.findByPessoa_CodigoPessoa(pessoaSalva.getCodigoPessoa())) {
+
+                if (!enderecosRequest.contains(enderecoSalvo)) {
+                    sqlEndereco.delete(enderecoSalvo);
+                }
+
+            }
+            for (Endereco enderecoRequest : enderecosRequest){
+                enderecoRequest.setPessoa(pessoaSalva);
+                sqlEndereco.save(enderecoRequest);
+
+            }
+
+
+        }
+
+        return buscarPessoas();
+    }
 }

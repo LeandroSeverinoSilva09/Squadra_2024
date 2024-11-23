@@ -1,9 +1,9 @@
 package apisquadra.service;
 
 import apisquadra.dto.MunicipioDTO;
-import apisquadra.dto.UFDTO;
+
+import apisquadra.exceptions.ExceptionPersonalizada;
 import apisquadra.model.Municipio;
-import apisquadra.model.UF;
 import apisquadra.repository.MunicipioRepository;
 import apisquadra.repository.UFRepository;
 import apisquadra.validator.MunicipioValidator;
@@ -33,7 +33,9 @@ public class MunicipioService {
                 municipiodto.getStatus()
         );
 
-        validatorMunicipio.existeMunicioCadastrado(municipio);
+        if(validatorMunicipio.existeMunicipioCadastrado(municipio)){
+            throw new ExceptionPersonalizada("Municipio já existente");
+        }
         sqlMunicipio.save(municipio);
         
         List<MunicipioDTO> listaMunicipioDTO = new ArrayList<>();
@@ -70,4 +72,36 @@ public class MunicipioService {
         return municipioDTOResposta;
 
     }
+
+    public List<MunicipioDTO> alterarMunicipio (MunicipioDTO municipiodto){
+        if (municipiodto.getCodigoMunicipio() == null){
+            throw new ExceptionPersonalizada("O codigoMunicipio precisa ter um valor válido");
+        }
+        Municipio municipio = new Municipio();
+        BeanUtils.copyProperties(municipiodto, municipio);
+
+        List<MunicipioDTO> listaMunicipioDTO = new ArrayList<>();
+
+        if (validatorMunicipio.existeMunicipioCodigoMunicipio(municipio.getCodigoMunicipio())) {
+            if (validatorMunicipio.existeMunicipioCadastrado(municipio)) {
+                throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
+            }
+            sqlMunicipio.save(municipio);
+
+
+            for (Municipio municipioSalvoConsulta : sqlMunicipio.findAll(Sort.by(Sort.Order.desc("codigoMunicipio")))) {
+                MunicipioDTO municipioDTOResposta = new MunicipioDTO();
+                //municipioDTOResposta.setCodigoMunicipio(municipioSalvoConsulta.get.getCodigoMunicipio());
+                BeanUtils.copyProperties(municipioSalvoConsulta, municipioDTOResposta);
+                listaMunicipioDTO.add(municipioDTOResposta);
+            }
+
+            return listaMunicipioDTO;
+
+        }else{
+            throw new ExceptionPersonalizada("Não existe Municipio com esse código " + municipio.getCodigoMunicipio());
+        }
+    }
+    
+    
 }

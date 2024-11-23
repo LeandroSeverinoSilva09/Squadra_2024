@@ -10,7 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UFDTO {
-    private long codigoUF;
+
+    private Long codigoUF;
 
     private String sigla;
 

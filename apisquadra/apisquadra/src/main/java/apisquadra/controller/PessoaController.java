@@ -2,6 +2,8 @@ package apisquadra.controller;
 
 import apisquadra.dto.PessoaDTO;
 import apisquadra.dto.PessoaRespostaDTO;
+import apisquadra.dto.UFDTO;
+import apisquadra.exceptions.RegistroExistente;
 import apisquadra.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,13 +39,24 @@ public class PessoaController {
         } else if(status!=null && login == null){
             List<PessoaDTO> pessoasDTO = pessoaService.buscarPessoaStatus(status);
             return new ResponseEntity<>(pessoasDTO, HttpStatus.OK);
-        } else {
+        } else if(login!=null && status==null){
             PessoaDTO pessoaDTO = pessoaService.buscarPessoaLogin(login);
             return new ResponseEntity<>(pessoaDTO, HttpStatus.OK);
+        } else if (login!=null && status!=null){
+            throw new RegistroExistente("Não foi possivél consultar a pesoa no banco de dados, existe mais de um parametro paera pesquisa");
         }
 
-        //return new ResponseEntity<>("", HttpStatus.OK);//findall()
+        return new ResponseEntity<>(pessoaService.buscarPessoas(), HttpStatus.OK);//findall()
 
+
+    }
+
+    @PutMapping()
+    public ResponseEntity alterar (@RequestBody PessoaDTO pessoaDTO){
+
+        List<PessoaDTO> pessoasDTO = pessoaService.alterar(pessoaDTO);
+
+        return new ResponseEntity(pessoasDTO, HttpStatus.OK);
 
     }
 

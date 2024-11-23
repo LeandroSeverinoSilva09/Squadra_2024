@@ -1,5 +1,6 @@
 package apisquadra.exceptions;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,24 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RegistroExistente.class)
-    public ResponseEntity<Map<String, Object>> handleApiExceptions(RuntimeException ex) {
-        return respostaJson("Registro já existente" /*+ ex.getMessage()*/, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, Object>> RegistroExistente(RuntimeException ex) {
+        return respostaJson(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ExceptionPersonalizada.class)
+    public ResponseEntity<Map<String, Object>> ExceptionPersonalizada(RuntimeException ex) {
+        return respostaJson(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> HttpMessageNotReadableException (HttpMessageNotReadableException ex) {
+        return respostaJson("Json tem algum erro ", HttpStatus.NOT_FOUND);
+    }
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgumentException (IllegalArgumentException ex){
-        return respostaJson("Registro não encontrado no banco de dados", HttpStatus.NOT_FOUND);
+        return respostaJson("Registro não encontrado no banco de dados ", HttpStatus.NOT_FOUND);
 
     }
 
@@ -38,9 +50,6 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Map<String, Object>> HttpMessageNotReadableException (HttpMessageNotReadableException ex) {
-        return respostaJson("Json tem algum erro", HttpStatus.NOT_FOUND);
-    }
+
 
 }

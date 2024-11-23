@@ -13,9 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MunicipioDTO {
 
-    private long codigoMunicipio;
+    private Long codigoMunicipio;
 
-    private long codigoUF;
+    private Long codigoUF;
 
     private String nome;
 

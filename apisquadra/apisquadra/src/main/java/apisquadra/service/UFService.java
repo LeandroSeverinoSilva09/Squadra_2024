@@ -1,6 +1,7 @@
 package apisquadra.service;
 
 import apisquadra.dto.UFDTO;
+import apisquadra.exceptions.ExceptionPersonalizada;
 import apisquadra.model.UF;
 import apisquadra.repository.UFRepository;
 import apisquadra.validator.UFValidator;
@@ -29,7 +30,9 @@ public class UFService {
         ); // uf model foi criada a partir do DTO que é o Json
         List<UFDTO> listaUFDTO = new ArrayList<>();
 
-        validatorUF.existeUFCadastrada(uf);
+        if (validatorUF.existeUFCadastradaNomeSigla(uf)){
+            throw new ExceptionPersonalizada("UF já existente");
+        };
         sqlUF.save(uf);
 
 
@@ -38,7 +41,7 @@ public class UFService {
             BeanUtils.copyProperties(UFSalvoConsulta, ufDTOResposta);
             listaUFDTO.add(ufDTOResposta);
         }
-        return listaUFDTO;// repository(sql) salva a entidade
+        return listaUFDTO;
 
 
 
@@ -77,5 +80,32 @@ public class UFService {
         return listaUFDTO;
     }
 
+    public List<UFDTO> alterarUF (UFDTO ufdto){
+        if (ufdto.getCodigoUF()==null){
+            throw new ExceptionPersonalizada("O codigoUF precisa ter um valor válido");
+        }
+        UF uf = new UF();
+        BeanUtils.copyProperties(ufdto, uf);
+
+        List<UFDTO> listaUFDTO = new ArrayList<>();
+
+        if (validatorUF.existeUFCodigoUF(uf.getCodigoUF())){
+            if(validatorUF.existeUFCadastradaNomeSigla(uf)){
+                throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
+            }
+            sqlUF.save(uf);
+
+            for (UF UFSalvoConsulta : sqlUF.findAll(Sort.by(Sort.Order.desc("codigoUF"))) ){
+                UFDTO ufDTOResposta = new UFDTO();
+                BeanUtils.copyProperties(UFSalvoConsulta, ufDTOResposta);
+                listaUFDTO.add(ufDTOResposta);
+            }
+            return listaUFDTO;// repository(sql) salva a entidade
+        }else {
+            throw new ExceptionPersonalizada("Não existe UF com esse código "+ uf.getCodigoUF());
+        }
+
+
+    }
 
 }

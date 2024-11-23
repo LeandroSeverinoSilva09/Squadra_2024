@@ -37,16 +37,24 @@ public class UFController {
         List<UFDTO> listaUFDTO = new ArrayList<>();
         if (status != null) {
             listaUFDTO = ufService.buscarUFComStatus(codigoUF, sigla, nome, status);
-
             return new ResponseEntity(listaUFDTO, HttpStatus.OK);
-        } else if (sigla!=null || nome!=null){
-            UFDTO ufDTOResposta = ufService.buscarUFSemStatus(codigoUF, sigla, nome);
 
+        } else if (sigla!=null || nome!=null || codigoUF!=null){
+            UFDTO ufDTOResposta = ufService.buscarUFSemStatus(codigoUF, sigla, nome);
             return new ResponseEntity(ufDTOResposta, HttpStatus.OK);
+
         }
 
         return new ResponseEntity(listaUFDTO, HttpStatus.OK);
 
+    }
+
+    @PutMapping()
+    public ResponseEntity alterar (@RequestBody UFDTO ufdto){
+
+        List<UFDTO> ufs = ufService.alterarUF(ufdto);
+
+        return new ResponseEntity(ufs, HttpStatus.OK);
 
     }
 }

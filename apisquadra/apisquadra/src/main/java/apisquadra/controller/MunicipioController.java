@@ -1,5 +1,6 @@
 package apisquadra.controller;
 
+import apisquadra.dto.BairroDTO;
 import apisquadra.dto.MunicipioDTO;
 import apisquadra.dto.MunicipioDTO;
 import apisquadra.service.MunicipioService;
@@ -45,6 +46,16 @@ public class MunicipioController {
         }
 
         return new ResponseEntity(listaMunicipioDTO, HttpStatus.OK);
+
+    }
+
+
+    @PutMapping()
+    public ResponseEntity alterar (@RequestBody MunicipioDTO municipioDTO){
+        List<MunicipioDTO> municipios = municipioService.alterarMunicipio(municipioDTO);
+
+        return new ResponseEntity(municipios, HttpStatus.OK);
+
 
     }
 }

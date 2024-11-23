@@ -22,7 +22,9 @@ public class PessoaRespostaDTO {
 
     private String login;
 
-    private String senha;private int status;
+    private String senha;
+
+    private int status;
 
     private List<EnderecoExtendsDTO> enderecos;
 

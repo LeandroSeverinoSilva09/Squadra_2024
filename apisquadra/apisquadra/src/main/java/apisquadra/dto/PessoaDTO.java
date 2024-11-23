@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PessoaDTO {
-    private long codigoPessoa;
+    private Long codigoPessoa;
 
     private String nome;
 
