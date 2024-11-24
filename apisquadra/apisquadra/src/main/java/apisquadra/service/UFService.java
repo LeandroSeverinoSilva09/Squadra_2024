@@ -48,32 +48,22 @@ public class UFService {
     }
 
 
-    public List<UFDTO> buscarUFComStatus(Long codigoUF, String sigla, String nome, Integer status){
-        List<UFDTO> listaUFDTO = new ArrayList<>();
+    public UFDTO buscarUF(Long codigoUF, String sigla, String nome, Integer status){
 
-        for (UF ufResposta : sqlUF.findByUFComStatus(codigoUF, sigla, nome, status)){
-            UFDTO ufDTOResposta = new UFDTO();
-            BeanUtils.copyProperties(ufResposta, ufDTOResposta);
-            listaUFDTO.add(ufDTOResposta);
-        }
-
-        return listaUFDTO;
-    }
-
-    public UFDTO buscarUFSemStatus(Long codigoUF, String sigla, String nome){
+        UF ufResposta = sqlUF.findByUF(codigoUF, sigla, nome, status);
         UFDTO ufDTOResposta = new UFDTO();
-        UF ufresposta = sqlUF.findByUFSemStatus(codigoUF, sigla, nome);
-        BeanUtils.copyProperties(ufresposta, ufDTOResposta);
+        BeanUtils.copyProperties(ufResposta, ufDTOResposta);
+
         return ufDTOResposta;
-
     }
 
-    public List<UFDTO> buscarListaUF (int status){
+
+    public List<UFDTO> buscarUFStatus (Integer status){
 
         List<UFDTO> listaUFDTO = new ArrayList<>();
         UFDTO ufDTOResposta = new UFDTO();
 
-        for (UF ufResposta : sqlUF.findByStatus(status) ){
+        for (UF ufResposta : sqlUF.findByStatus(status) ){ //==================================================================== integer
             BeanUtils.copyProperties(ufResposta, ufDTOResposta);
             listaUFDTO.add(ufDTOResposta);
         }
@@ -90,9 +80,9 @@ public class UFService {
         List<UFDTO> listaUFDTO = new ArrayList<>();
 
         if (validatorUF.existeUFCodigoUF(uf.getCodigoUF())){
-            if(validatorUF.existeUFCadastradaNomeSigla(uf)){
-                throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
-            }
+            //if(validatorUF.existeUFCadastradaNomeSigla(uf)){
+            //    throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
+            //}
             sqlUF.save(uf);
 
             for (UF UFSalvoConsulta : sqlUF.findAll(Sort.by(Sort.Order.desc("codigoUF"))) ){

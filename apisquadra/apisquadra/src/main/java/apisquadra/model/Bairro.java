@@ -19,7 +19,7 @@ public class Bairro {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bairro_seq")
     @SequenceGenerator(name = "bairro_seq", sequenceName = "SEQUENCE_BAIRRO", allocationSize = 1)
     @Column(name = "CODIGO_BAIRRO")
-    private long codigoBairro;
+    private Long codigoBairro;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CODIGO_MUNICIPIO", nullable = false)

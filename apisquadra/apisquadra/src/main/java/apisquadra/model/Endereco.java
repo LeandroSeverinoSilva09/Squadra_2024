@@ -19,7 +19,7 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "endereco_seq")
     @SequenceGenerator(name = "endereco_seq", sequenceName = "SEQUENCE_ENDERECO", allocationSize = 1)
     @Column(name = "CODIGO_ENDERECO")
-    private long codigoEndereco;
+    private Long codigoEndereco;
 
 
     @ManyToOne(fetch = FetchType.EAGER)

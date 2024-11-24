@@ -1,8 +1,7 @@
 package apisquadra.controller;
 
 import apisquadra.dto.BairroDTO;
-import apisquadra.dto.MunicipioDTO;
-import apisquadra.dto.UFDTO;
+
 import apisquadra.service.BairroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,9 +52,9 @@ public class BairroController {
 
         return new ResponseEntity(bairros, HttpStatus.OK);
 
-
-
     }
+
+
 
 
 

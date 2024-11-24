@@ -16,19 +16,26 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
     Municipio findByCodigoMunicipio(long codigoMunucipio);
 
     @Query("SELECT m FROM Municipio m WHERE " +
+            "( :codigoUF IS NULL OR m.uf.codigoUF = :codigoUF ) AND " +
+            "( :status IS NULL OR m.status = :status ) AND " +
+            "( :nome IS NULL OR m.nome = :nome )")
+    List<Municipio> findByListaMunicipio(Integer status, Long codigoUF, String nome);
+
+    /*
+    @Query("SELECT m FROM Municipio m WHERE " +
             "( :codigoMunicipio IS NULL OR m.codigoMunicipio = :codigoMunicipio ) AND " +
             "( :codigoUF IS NULL OR m.uf.codigoUF = :codigoUF ) AND " +
             "( :nome IS NULL OR m.nome = :nome )")
     Municipio findByMunicipioSemStatus(@Param("codigoMunicipio") Long codigoMunicipio,
                                        @Param("codigoUF") Long codigoUF,
-                                       @Param("nome") String nome);
+                                       @Param("nome") String nome);*/
 
     @Query("SELECT m FROM Municipio m WHERE " +
             "( :codigoMunicipio IS NULL OR m.codigoMunicipio = :codigoMunicipio ) AND " +
             "( :codigoUF IS NULL OR m.uf.codigoUF = :codigoUF ) AND " +
             "( :nome IS NULL OR m.nome = :nome ) AND " +
             "( :status IS NULL OR m.status = :status )")
-    List<Municipio> findByMunicipioComStatus(@Param("codigoMunicipio") Long codigoMunicipio,
+    Municipio findByMunicipio(@Param("codigoMunicipio") Long codigoMunicipio,
                                              @Param("codigoUF") Long codigoUF,
                                              @Param("nome") String nome,
                                              @Param("status") Integer status);

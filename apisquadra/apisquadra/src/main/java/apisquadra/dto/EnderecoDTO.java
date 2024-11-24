@@ -12,11 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EnderecoDTO {
 
-    private long codigoPessoa;
+    private Long codigoPessoa;
 
-    private long codigoEndereco;
+    private Long codigoEndereco;
 
-    private long codigoBairro;
+    private Long codigoBairro;
 
     private String nomeRua;
 

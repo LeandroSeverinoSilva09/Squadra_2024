@@ -23,7 +23,7 @@ public class Pessoa {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_seq")
     @SequenceGenerator(name = "pessoa_seq", sequenceName = "SEQUENCE_PESSOA", allocationSize = 1)
     @Column(name = "CODIGO_PESSOA")
-    private long codigoPessoa;
+    private Long codigoPessoa;
 
     @Column(name = "NOME")
     private String nome;

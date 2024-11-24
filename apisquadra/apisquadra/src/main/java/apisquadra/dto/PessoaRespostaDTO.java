@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PessoaRespostaDTO {
 
-    private long codigoPessoa;
+    private Long codigoPessoa;
 
     private String nome;
 

@@ -26,12 +26,9 @@ public class MunicipioService {
     private UFRepository sqlUF;
 
     public List<MunicipioDTO> salvarMunicipio (MunicipioDTO municipiodto){
-        Municipio municipio = new Municipio(
-                municipiodto.getCodigoMunicipio(),
-                sqlUF.findByCodigoUF(municipiodto.getCodigoUF()),
-                municipiodto.getNome(),
-                municipiodto.getStatus()
-        );
+        Municipio municipio = new Municipio();
+        BeanUtils.copyProperties(municipiodto, municipio);
+        municipio.setUf(sqlUF.findByCodigoUF(municipiodto.getCodigoUF()));
 
         if(validatorMunicipio.existeMunicipioCadastrado(municipio)){
             throw new ExceptionPersonalizada("Municipio já existente");
@@ -51,10 +48,10 @@ public class MunicipioService {
         return listaMunicipioDTO;
     }
 
-    public List<MunicipioDTO> buscarMunicipioComStatus(Long codigoMunicipio, Long codigoUF, String nome, Integer status){
+    public List<MunicipioDTO> buscarListaMunicipio(Integer status, Long codigoUF, String nome){
         List<MunicipioDTO> listaMunicipioDTO = new ArrayList<>();
 
-        for (Municipio municipioResposta : sqlMunicipio.findByMunicipioComStatus(codigoMunicipio, codigoUF, nome, status)){
+        for (Municipio municipioResposta : sqlMunicipio.findByListaMunicipio(status, codigoUF, nome)){
             MunicipioDTO municipioDTOResposta = new MunicipioDTO();
             BeanUtils.copyProperties(municipioResposta, municipioDTOResposta);
             municipioDTOResposta.setCodigoUF(municipioResposta.getUf().getCodigoUF());
@@ -64,9 +61,10 @@ public class MunicipioService {
         return listaMunicipioDTO;
     }
 
-    public MunicipioDTO buscarMunicipioSemStatus(Long codigoMunicipio, Long codigoUF, String nome){
+    public MunicipioDTO buscarMunicipio(Long codigoMunicipio, Long codigoUF, String nome, Integer status){
+
         MunicipioDTO municipioDTOResposta = new MunicipioDTO();
-        Municipio municipioResposta = sqlMunicipio.findByMunicipioSemStatus(codigoMunicipio, codigoUF, nome);
+        Municipio municipioResposta = sqlMunicipio.findByMunicipio(codigoMunicipio, codigoUF, nome, status);
         BeanUtils.copyProperties(municipioResposta, municipioDTOResposta);
         municipioDTOResposta.setCodigoUF(municipioResposta.getUf().getCodigoUF());
         return municipioDTOResposta;
@@ -83,9 +81,9 @@ public class MunicipioService {
         List<MunicipioDTO> listaMunicipioDTO = new ArrayList<>();
 
         if (validatorMunicipio.existeMunicipioCodigoMunicipio(municipio.getCodigoMunicipio())) {
-            if (validatorMunicipio.existeMunicipioCadastrado(municipio)) {
-                throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
-            }
+            //if (validatorMunicipio.existeMunicipioCadastrado(municipio)) {
+            //    throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
+            //}
             sqlMunicipio.save(municipio);
 
 

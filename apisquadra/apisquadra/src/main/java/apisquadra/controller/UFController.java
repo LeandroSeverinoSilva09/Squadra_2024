@@ -35,14 +35,18 @@ public class UFController {
             @RequestParam(required = false) Integer status){
 
         List<UFDTO> listaUFDTO = new ArrayList<>();
-        if (status != null) {
-            listaUFDTO = ufService.buscarUFComStatus(codigoUF, sigla, nome, status);
+        try {
+            if (status != null && sigla == null && nome == null && codigoUF == null) {
+                listaUFDTO = ufService.buscarUFStatus(status);
+                return new ResponseEntity(listaUFDTO, HttpStatus.OK);
+
+            } else if (sigla != null || nome != null || codigoUF != null) {
+                UFDTO ufDTOResposta = ufService.buscarUF(codigoUF, sigla, nome, status);
+                return new ResponseEntity(ufDTOResposta, HttpStatus.OK);
+
+            }
+        } catch (Exception e) {
             return new ResponseEntity(listaUFDTO, HttpStatus.OK);
-
-        } else if (sigla!=null || nome!=null || codigoUF!=null){
-            UFDTO ufDTOResposta = ufService.buscarUFSemStatus(codigoUF, sigla, nome);
-            return new ResponseEntity(ufDTOResposta, HttpStatus.OK);
-
         }
 
         return new ResponseEntity(listaUFDTO, HttpStatus.OK);

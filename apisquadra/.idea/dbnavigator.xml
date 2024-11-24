@@ -17,7 +17,13 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="dd34428b-ec9d-48b1-a2bf-ccffad34634d">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[SELECT m.codigo_municipio, m.codigo_uf, u.nome FROM tb_municipio m LEFT JOIN tb_uf u ON m.codigo_uf = u.codigo_uf WHERE m.codigo_uf IS NULL;]]></console>
+      <console name="Connection" type="STANDARD" schema="C##JAVA" session="Main"><![CDATA[--CREATE SEQUENCE SEQUENCE_PESSOA INCREMENT BY 1 START WITH 1 MAXVALUE 999999999 MINVALUE 1 NOCACHE;
+--CREATE SEQUENCE SEQUENCE_ENDERECO INCREMENT BY 1 START WITH 1 MAXVALUE 999999999 MINVALUE 1 NOCACHE;
+--CREATE SEQUENCE SEQUENCE_BAIRRO INCREMENT BY 1 START WITH 1 MAXVALUE 999999999 MINVALUE 1 NOCACHE;
+--CREATE SEQUENCE SEQUENCE_MUNICIPIO INCREMENT BY 1 START WITH 1 MAXVALUE 999999999 MINVALUE 1 NOCACHE;
+--CREATE SEQUENCE SEQUENCE_UF INCREMENT BY 1 START WITH 1 MAXVALUE 999999999 MINVALUE 1 NOCACHE;
+
+SELECT SEQUENCE_OWNER, SEQUENCE_NAME FROM ALL_SEQUENCES;]]></console>
       <console name="Connection 1" type="STANDARD" schema="C##JAVA" session="Main"><![CDATA[select * from TB_UF;
 select * from TB_MUNICIPIO;
 select * from TB_PESSOA;
@@ -35,9 +41,7 @@ select * from TB_BAIRRO
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="dd34428b-ec9d-48b1-a2bf-ccffad34634d" object-ref="consoles/Connection 1" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="dd34428b-ec9d-48b1-a2bf-ccffad34634d" />

@@ -35,14 +35,19 @@ public class MunicipioController {
             @RequestParam(required = false) Long codigoUF,
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status){
-        List<MunicipioDTO> listaMunicipioDTO = new ArrayList<>();
-        if (status != null) {
-            listaMunicipioDTO = municipioService.buscarMunicipioComStatus(codigoMunicipio, codigoUF, nome, status);
-            return new ResponseEntity(listaMunicipioDTO, HttpStatus.OK);
 
-        } else if (codigoUF!=null || codigoMunicipio!=null || nome!=null){
-            MunicipioDTO MunicipioDTOResposta = municipioService.buscarMunicipioSemStatus(codigoMunicipio, codigoUF, nome);
-            return new ResponseEntity(MunicipioDTOResposta, HttpStatus.OK);
+        List<MunicipioDTO> listaMunicipioDTO = new ArrayList<>();
+        try {
+            if ((status != null || nome != null || codigoUF != null) && codigoMunicipio == null) {
+                listaMunicipioDTO = municipioService.buscarListaMunicipio(status, codigoUF, nome);
+                return new ResponseEntity(listaMunicipioDTO, HttpStatus.OK);
+
+            } else if (codigoMunicipio != null) {
+                MunicipioDTO MunicipioDTOResposta = municipioService.buscarMunicipio(codigoMunicipio, codigoUF, nome, status);
+                return new ResponseEntity(MunicipioDTOResposta, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity(listaMunicipioDTO, HttpStatus.OK);
         }
 
         return new ResponseEntity(listaMunicipioDTO, HttpStatus.OK);

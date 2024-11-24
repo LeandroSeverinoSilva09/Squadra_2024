@@ -80,11 +80,39 @@ public class BairroService {
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
 
         if (validatorBairro.existeBairroCodigoBairro(bairro.getCodigoBairro())) {
-            if (validatorBairro.existeBairroCadastrado(bairro)) {
-                throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
-            }
+            //if (validatorBairro.existeBairroCadastrado(bairro)) {
+            //    throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
+            //}
             sqlBairro.save(bairro);
 
+
+            for (Bairro bairroSalvoConsulta : sqlBairro.findAll(Sort.by(Sort.Order.desc("codigoBairro")))) {
+                BairroDTO bairroDTOResposta = new BairroDTO();
+                bairroDTOResposta.setCodigoMunicipio(bairroSalvoConsulta.getMunicipio().getCodigoMunicipio());
+                BeanUtils.copyProperties(bairroSalvoConsulta, bairroDTOResposta);
+                listaBairroDTO.add(bairroDTOResposta);
+            }
+
+            return listaBairroDTO;
+
+        }else{
+            throw new ExceptionPersonalizada("Não existe UF com esse código " + bairro.getCodigoBairro());
+        }
+    }
+
+    public List<BairroDTO> deletarBairro (BairroDTO bairroDTO){
+        if (bairroDTO.getCodigoBairro() == null){
+            throw new ExceptionPersonalizada("O codigoBairro precisa ter um valor válido");
+        }
+        Bairro bairro = new Bairro();
+        BeanUtils.copyProperties(bairroDTO, bairro);
+
+        List<BairroDTO> listaBairroDTO = new ArrayList<>();
+
+        if (validatorBairro.existeBairroCodigoBairro(bairro.getCodigoBairro())) {
+
+            bairro.setCodigoBairro(Long.valueOf(3));
+            sqlBairro.save(bairro);
 
             for (Bairro bairroSalvoConsulta : sqlBairro.findAll(Sort.by(Sort.Order.desc("codigoBairro")))) {
                 BairroDTO bairroDTOResposta = new BairroDTO();
