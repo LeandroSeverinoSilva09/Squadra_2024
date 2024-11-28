@@ -1,6 +1,5 @@
 package apisquadra.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,14 +17,11 @@ public class Municipio {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "municipio_seq")
     @SequenceGenerator(name = "municipio_seq", sequenceName = "SEQUENCE_MUNICIPIO", allocationSize = 1)
-    @Column(name = "CODIGO_MUNICIPIO")
+    @Column(name = "CODIGO_MUNICIPIO", nullable = false)
     private Long codigoMunicipio;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CODIGO_UF", nullable = false)
-    //@JsonIgnore
-    //@Column(name = "CODIGO_UF")
-    //private long codigoUF;
+    @JoinColumn(name = "CODIGO_UF")
     private UF uf;
 
     @Column(name = "NOME")

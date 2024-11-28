@@ -1,13 +1,11 @@
 package apisquadra.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_seq")
     @SequenceGenerator(name = "pessoa_seq", sequenceName = "SEQUENCE_PESSOA", allocationSize = 1)
-    @Column(name = "CODIGO_PESSOA")
+    @Column(name = "CODIGO_PESSOA", nullable = false)
     private Long codigoPessoa;
 
     @Column(name = "NOME")
@@ -45,6 +43,6 @@ public class Pessoa {
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Endereco> enderecos = new ArrayList<>();
-    //private List<Endereco> enderecos = new ArrayList<>();
+
 
 }

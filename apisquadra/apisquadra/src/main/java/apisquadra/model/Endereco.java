@@ -23,17 +23,12 @@ public class Endereco {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CODIGO_PESSOA", nullable = false)
+    @JoinColumn(name = "CODIGO_PESSOA")
     @JsonIgnore
-    //private Pessoa pessoa;
-    //@Column(name = "CODIGO_PESSOA")
-    //private long codigoPessoa;
     private Pessoa pessoa;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CODIGO_BAIRRO", nullable = false)
-    //@Column(name = "CODIGO_BAIRRO")
-    //private long codigoBairro;
+    @JoinColumn(name = "CODIGO_BAIRRO")
     private Bairro bairro;
 
     @Column(name = "NOME_RUA")

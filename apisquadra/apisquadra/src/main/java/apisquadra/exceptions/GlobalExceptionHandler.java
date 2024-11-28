@@ -40,13 +40,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgumentException (IllegalArgumentException ex){
-        return respostaJson("Registro não encontrado no banco de dados ", HttpStatus.NOT_FOUND);
+        return respostaJson("Campo com valor inválido ", HttpStatus.NOT_FOUND);
 
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, Object>> DataIntegrityViolationException (DataIntegrityViolationException ex){
-        return respostaJson("Chave Primária não existe", HttpStatus.NOT_FOUND);
+        return respostaJson("Erro ao salvar os dados no banco", HttpStatus.NOT_FOUND);
 
     }
 

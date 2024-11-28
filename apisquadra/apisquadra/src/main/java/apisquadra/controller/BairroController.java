@@ -31,16 +31,21 @@ public class BairroController {
             @RequestParam(required = false) Long codigoMunicipio,
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) Integer status){
+
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
-        if (status != null) {
-             listaBairroDTO = bairroService.buscarBairroComStatus(codigoBairro, codigoMunicipio, nome, status);
+        try {
+            if ((status != null || codigoMunicipio != null || nome != null) && codigoBairro == null) {
+                listaBairroDTO = bairroService.buscarBairroComStatus(codigoBairro, codigoMunicipio, nome, status);
+                return new ResponseEntity(listaBairroDTO, HttpStatus.OK);
+
+            } else if (codigoBairro != null) {
+                BairroDTO bairroDTOResposta = bairroService.buscarBairroSemStatus(codigoBairro, codigoMunicipio, nome);
+                return new ResponseEntity(bairroDTOResposta, HttpStatus.OK);
+            }
+        } catch (Exception e) {
             return new ResponseEntity(listaBairroDTO, HttpStatus.OK);
-
-        } else if (codigoBairro!=null || codigoMunicipio!=null || nome!=null){
-            BairroDTO bairroDTOResposta = bairroService.buscarBairroSemStatus(codigoBairro, codigoMunicipio, nome);
-            return new ResponseEntity(bairroDTOResposta, HttpStatus.OK);
         }
-
+        listaBairroDTO = bairroService.buscarBairro();
         return new ResponseEntity(listaBairroDTO, HttpStatus.OK);
 
     }

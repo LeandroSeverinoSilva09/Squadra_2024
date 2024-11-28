@@ -12,5 +12,5 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
     boolean existsByLogin(String login);
     Pessoa findByCodigoPessoa (Long codigoPessoa);
     List<Pessoa> findByStatus(Integer status);
-    Pessoa findByLogin(String login);
+    List<Pessoa> findByLogin(String login);
 }

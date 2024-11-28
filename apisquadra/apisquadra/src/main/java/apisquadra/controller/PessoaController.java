@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,17 +34,22 @@ public class PessoaController {
             @RequestParam(required = false) Long codigoPessoa,
             @RequestParam(required = false) String login,
             @RequestParam(required = false) Integer status){
-        if (codigoPessoa!=null){
-            PessoaRespostaDTO pessoaRespostaDTO = pessoaService.buscarPessoaCodigo(codigoPessoa);
-            return new ResponseEntity<>(pessoaRespostaDTO, HttpStatus.OK);
-        } else if(status!=null && login == null){
-            List<PessoaDTO> pessoasDTO = pessoaService.buscarPessoaStatus(status);
+        List<PessoaDTO> pessoasDTO = new ArrayList<>();
+        try {
+            if (codigoPessoa != null) {
+                PessoaRespostaDTO pessoaRespostaDTO = pessoaService.buscarPessoaCodigo(codigoPessoa);
+                return new ResponseEntity<>(pessoaRespostaDTO, HttpStatus.OK);
+            } else if (status != null && login == null) {
+                pessoasDTO = pessoaService.buscarPessoaStatus(status);
+                return new ResponseEntity<>(pessoasDTO, HttpStatus.OK);
+            } else if (login != null && status == null) {
+                pessoasDTO = pessoaService.buscarPessoaLogin(login);
+                return new ResponseEntity<>(pessoasDTO, HttpStatus.OK);
+            } else if (login != null && status != null) {
+                throw new RegistroExistente("Não foi possivél consultar a pesoa no banco de dados, existe mais de um parametro paera pesquisa");
+            }
+        } catch (Exception e) {
             return new ResponseEntity<>(pessoasDTO, HttpStatus.OK);
-        } else if(login!=null && status==null){
-            PessoaDTO pessoaDTO = pessoaService.buscarPessoaLogin(login);
-            return new ResponseEntity<>(pessoaDTO, HttpStatus.OK);
-        } else if (login!=null && status!=null){
-            throw new RegistroExistente("Não foi possivél consultar a pesoa no banco de dados, existe mais de um parametro paera pesquisa");
         }
 
         return new ResponseEntity<>(pessoaService.buscarPessoas(), HttpStatus.OK);//findall()

@@ -50,7 +50,7 @@ public class MunicipioController {
             return new ResponseEntity(listaMunicipioDTO, HttpStatus.OK);
         }
 
-        return new ResponseEntity(listaMunicipioDTO, HttpStatus.OK);
+        return new ResponseEntity(municipioService.buscarTodosMunicipios(), HttpStatus.OK);
 
     }
 

@@ -51,23 +51,46 @@ public class BairroService {
 
     public List<BairroDTO> buscarBairroComStatus(Long codigoBairro, Long codigoMunicipio, String nome, Integer status){
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
+        try {
+            for (Bairro bairroResposta : sqlBairro.findByBairroComStatus(codigoBairro, codigoMunicipio, nome, status)) {
+                BairroDTO bairroDTOResposta = new BairroDTO();
+                BeanUtils.copyProperties(bairroResposta, bairroDTOResposta);
+                bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
+                listaBairroDTO.add(bairroDTOResposta);
+            }
 
-        for (Bairro bairroResposta : sqlBairro.findByBairroComStatus(codigoBairro, codigoMunicipio, nome, status)){
-            BairroDTO bairroDTOResposta = new BairroDTO();
-            BeanUtils.copyProperties(bairroResposta, bairroDTOResposta);
-            bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
-            listaBairroDTO.add(bairroDTOResposta);
+            return listaBairroDTO;
+        } catch (Exception e) {
+            throw new ExceptionPersonalizada("Não foi possivél Consultar o Bairro no banco de dados ");
         }
+    }
 
-        return listaBairroDTO;
+    public List<BairroDTO> buscarBairro(){
+        List<BairroDTO> listaBairroDTO = new ArrayList<>();
+        try {
+            for (Bairro bairroResposta : sqlBairro.findAll(Sort.by(Sort.Order.desc("codigoBairro")))){
+                BairroDTO bairroDTOResposta = new BairroDTO();
+                BeanUtils.copyProperties(bairroResposta, bairroDTOResposta);
+                bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
+                listaBairroDTO.add(bairroDTOResposta);
+            }
+
+            return listaBairroDTO;
+        } catch (Exception e) {
+            throw new ExceptionPersonalizada("Não foi possivél Consultar o Bairro no banco de dados ");
+        }
     }
 
     public BairroDTO buscarBairroSemStatus(Long codigoBairro, Long codigoMunicipio, String nome) {
-        BairroDTO bairroDTOResposta = new BairroDTO();
-        Bairro bairroResposta = sqlBairro.findByBairroSemStatus(codigoBairro, codigoMunicipio, nome);
-        BeanUtils.copyProperties(bairroResposta, bairroDTOResposta);
-        bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
-        return bairroDTOResposta;
+        try {
+            BairroDTO bairroDTOResposta = new BairroDTO();
+            Bairro bairroResposta = sqlBairro.findByBairroSemStatus(codigoBairro, codigoMunicipio, nome);
+            BeanUtils.copyProperties(bairroResposta, bairroDTOResposta);
+            bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
+            return bairroDTOResposta;
+        } catch (Exception e) {
+            throw new ExceptionPersonalizada("Não foi possivél Consultar o Bairro no banco de dados ");
+        }
     }
 
     public List<BairroDTO> alterarBairro (BairroDTO bairrodto){
@@ -76,6 +99,8 @@ public class BairroService {
         }
         Bairro bairro = new Bairro();
         BeanUtils.copyProperties(bairrodto, bairro);
+        bairro.setMunicipio(sqlMunucipio.findByCodigoMunicipio(bairrodto.getCodigoMunicipio()));
+        System.out.println("====================================" + bairro.getMunicipio().getCodigoMunicipio());
 
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
 
@@ -124,7 +149,7 @@ public class BairroService {
             return listaBairroDTO;
 
         }else{
-            throw new ExceptionPersonalizada("Não existe UF com esse código " + bairro.getCodigoBairro());
+            throw new ExceptionPersonalizada("Não existe Bairro com esse código " + bairro.getCodigoBairro());
         }
     }
 

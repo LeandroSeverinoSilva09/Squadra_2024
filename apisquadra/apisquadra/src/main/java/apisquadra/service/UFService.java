@@ -27,7 +27,7 @@ public class UFService {
                 ufdto.getSigla(),
                 ufdto.getNome(),
                 ufdto.getStatus()
-        ); // uf model foi criada a partir do DTO que é o Json
+        );
         List<UFDTO> listaUFDTO = new ArrayList<>();
 
         if (validatorUF.existeUFCadastradaNomeSigla(uf)){
@@ -49,25 +49,31 @@ public class UFService {
 
 
     public UFDTO buscarUF(Long codigoUF, String sigla, String nome, Integer status){
+        try{
+            UF ufResposta = sqlUF.findByUF(codigoUF, sigla, nome, status);
+            UFDTO ufDTOResposta = new UFDTO();
+            BeanUtils.copyProperties(ufResposta, ufDTOResposta);
 
-        UF ufResposta = sqlUF.findByUF(codigoUF, sigla, nome, status);
-        UFDTO ufDTOResposta = new UFDTO();
-        BeanUtils.copyProperties(ufResposta, ufDTOResposta);
-
-        return ufDTOResposta;
+            return ufDTOResposta;
+        } catch (Exception e) {
+            throw new ExceptionPersonalizada("Não foi possivél Consultar a UF no banco de dados ");
+        }
     }
 
 
     public List<UFDTO> buscarUFStatus (Integer status){
+        try{
+            List<UFDTO> listaUFDTO = new ArrayList<>();
+            UFDTO ufDTOResposta = new UFDTO();
 
-        List<UFDTO> listaUFDTO = new ArrayList<>();
-        UFDTO ufDTOResposta = new UFDTO();
-
-        for (UF ufResposta : sqlUF.findByStatus(status) ){ //==================================================================== integer
-            BeanUtils.copyProperties(ufResposta, ufDTOResposta);
-            listaUFDTO.add(ufDTOResposta);
+            for (UF ufResposta : sqlUF.findByStatus(status) ){ //==================================================================== integer
+                BeanUtils.copyProperties(ufResposta, ufDTOResposta);
+                listaUFDTO.add(ufDTOResposta);
+            }
+            return listaUFDTO;
+        } catch (Exception e) {
+            throw new ExceptionPersonalizada("Não foi possivél Consultar a UF no banco de dados ");
         }
-        return listaUFDTO;
     }
 
     public List<UFDTO> alterarUF (UFDTO ufdto){
@@ -80,9 +86,7 @@ public class UFService {
         List<UFDTO> listaUFDTO = new ArrayList<>();
 
         if (validatorUF.existeUFCodigoUF(uf.getCodigoUF())){
-            //if(validatorUF.existeUFCadastradaNomeSigla(uf)){
-            //    throw new ExceptionPersonalizada("Já existe outra UF com esses dados");
-            //}
+
             sqlUF.save(uf);
 
             for (UF UFSalvoConsulta : sqlUF.findAll(Sort.by(Sort.Order.desc("codigoUF"))) ){
@@ -92,7 +96,7 @@ public class UFService {
             }
             return listaUFDTO;// repository(sql) salva a entidade
         }else {
-            throw new ExceptionPersonalizada("Não existe UF com esse código "+ uf.getCodigoUF());
+            throw new ExceptionPersonalizada("Não existe UF com esse código: "+ uf.getCodigoUF());
         }
 
 

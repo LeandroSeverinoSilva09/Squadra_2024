@@ -17,7 +17,7 @@ public class UF {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UF_seq")
     @SequenceGenerator(name = "UF_seq", sequenceName = "SEQUENCE_UF", allocationSize = 1)
-    @Column(name = "CODIGO_UF")
+    @Column(name = "CODIGO_UF", nullable = false)
     private Long codigoUF;
 
     @Column(name = "SIGLA")
