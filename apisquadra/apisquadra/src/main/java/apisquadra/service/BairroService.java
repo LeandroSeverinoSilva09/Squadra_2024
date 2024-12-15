@@ -49,10 +49,10 @@ public class BairroService {
     return listaBairroDTO;
     }
 
-    public List<BairroDTO> buscarBairroComStatus(Long codigoBairro, Long codigoMunicipio, String nome, Integer status){
+    public List<BairroDTO> buscarListaBairro(Long codigoBairro, Long codigoMunicipio, String nome, Integer status){
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
         try {
-            for (Bairro bairroResposta : sqlBairro.findByBairroComStatus(codigoBairro, codigoMunicipio, nome, status)) {
+            for (Bairro bairroResposta : sqlBairro.findByBairroLista(codigoBairro, codigoMunicipio, nome, status)) {
                 BairroDTO bairroDTOResposta = new BairroDTO();
                 BeanUtils.copyProperties(bairroResposta, bairroDTOResposta);
                 bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
@@ -65,7 +65,7 @@ public class BairroService {
         }
     }
 
-    public List<BairroDTO> buscarBairro(){
+    public List<BairroDTO> buscarTodosBairro(){
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
         try {
             for (Bairro bairroResposta : sqlBairro.findAll(Sort.by(Sort.Order.desc("codigoBairro")))){
@@ -81,10 +81,10 @@ public class BairroService {
         }
     }
 
-    public BairroDTO buscarBairroSemStatus(Long codigoBairro, Long codigoMunicipio, String nome) {
+    public BairroDTO buscarBairro(Long codigoBairro, Long codigoMunicipio, String nome, Integer status) {
         try {
             BairroDTO bairroDTOResposta = new BairroDTO();
-            Bairro bairroResposta = sqlBairro.findByBairroSemStatus(codigoBairro, codigoMunicipio, nome);
+            Bairro bairroResposta = sqlBairro.findByBairro(codigoBairro, codigoMunicipio, nome, status);
             BeanUtils.copyProperties(bairroResposta, bairroDTOResposta);
             bairroDTOResposta.setCodigoMunicipio(bairroResposta.getMunicipio().getCodigoMunicipio());
             return bairroDTOResposta;

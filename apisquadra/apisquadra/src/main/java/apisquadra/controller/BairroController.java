@@ -35,17 +35,18 @@ public class BairroController {
         List<BairroDTO> listaBairroDTO = new ArrayList<>();
         try {
             if ((status != null || codigoMunicipio != null || nome != null) && codigoBairro == null) {
-                listaBairroDTO = bairroService.buscarBairroComStatus(codigoBairro, codigoMunicipio, nome, status);
+
+                listaBairroDTO = bairroService.buscarListaBairro(codigoBairro, codigoMunicipio, nome, status);
                 return new ResponseEntity(listaBairroDTO, HttpStatus.OK);
 
             } else if (codigoBairro != null) {
-                BairroDTO bairroDTOResposta = bairroService.buscarBairroSemStatus(codigoBairro, codigoMunicipio, nome);
+                BairroDTO bairroDTOResposta = bairroService.buscarBairro(codigoBairro, codigoMunicipio, nome, status);
                 return new ResponseEntity(bairroDTOResposta, HttpStatus.OK);
             }
         } catch (Exception e) {
             return new ResponseEntity(listaBairroDTO, HttpStatus.OK);
         }
-        listaBairroDTO = bairroService.buscarBairro();
+        listaBairroDTO = bairroService.buscarTodosBairro();
         return new ResponseEntity(listaBairroDTO, HttpStatus.OK);
 
     }

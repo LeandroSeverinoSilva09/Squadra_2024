@@ -17,17 +17,19 @@ public interface BairroRepository extends JpaRepository<Bairro, Long> {
     @Query("SELECT b FROM Bairro b WHERE " +
             "( :codigoBairro IS NULL OR b.codigoBairro = :codigoBairro ) AND " +
             "( :codigoMunicipio IS NULL OR b.municipio.codigoMunicipio = :codigoMunicipio ) AND " +
-            "( :nome IS NULL OR b.nome = :nome )")
-    Bairro findByBairroSemStatus(@Param("codigoBairro") Long codigoBairro,
+            "( :nome IS NULL OR b.nome = :nome) AND "+
+            "( :status IS NULL OR b.status = :status )")
+    Bairro findByBairro(@Param("codigoBairro") Long codigoBairro,
                                  @Param("codigoMunicipio") Long codigoMunicipio,
-                                 @Param("nome") String nome);
+                                 @Param("nome") String nome,
+                                @Param("status") Integer status);
 
     @Query("SELECT b FROM Bairro b WHERE " +
             "( :codigoBairro IS NULL OR b.codigoBairro = :codigoBairro ) AND " +
             "( :codigoMunicipio IS NULL OR b.municipio.codigoMunicipio = :codigoMunicipio ) AND " +
             "( :nome IS NULL OR b.nome = :nome ) AND " +
             "( :status IS NULL OR b.status = :status )")
-    List<Bairro> findByBairroComStatus(@Param("codigoBairro") Long codigoBairro,
+    List<Bairro> findByBairroLista(@Param("codigoBairro") Long codigoBairro,
                                        @Param("codigoMunicipio") Long codigoMunicipio,
                                        @Param("nome") String nome,
                                        @Param("status") Integer status);
